@@ -1,0 +1,28 @@
+{
+  "name": "zeplin",
+  "version": "0.0.2",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "dev:test": "chokidar '**/*.test.js' -c jest",
+    "compile": "babel src --out-dir dist",
+    "build": "npm run compile && pkg dist/index.js -t node8-macos-x64 -o bin/server",
+    "build-for-all": "pkg index.js -t node8-macos-x64,node8-linux-x64,node8-win-x64 -o bin/server"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "chokidar-cli": "^1.2.0",
+    "express": "^4.16.3",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.3",
+    "pkg": "^4.3.4",
+    "test": "^0.6.0"
+  }
+}
