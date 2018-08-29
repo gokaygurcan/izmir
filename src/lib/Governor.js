@@ -3,28 +3,22 @@ import fs from 'fs'
 
 export default class Governor {
     constructor(userConfig) {
-				// Make sure module path is properly passed
-				if(userConfig.MODULES) {
-					userConfig.MODULES = path.resolve(userConfig.MODULES)
+				// Initiate the config	
+				this.config = {
+					PREFIX:process.env.IZMIR_PREFIX || 'izmir',
+					PORT:process.env.IZMIR_PORT || 8080,
+					MODULES:process.env.IZMIR_MODULES || 'node_modules'
 				}
-        this.userConfig = userConfig
-    }
-    getConfig() {
-        const defaultConfig = {
-            PREFIX: 'super',
-            MODULES: path.resolve(process.cwd(), 'node_modules'),
-            PORT: 8080
-        }
-        // userConfig overwrites on defaults
-        const config = Object.assign({}, defaultConfig, this.userConfig)
-        return config
-    }
+		}
+		getConfig() {
+			return this.config
+		}
     getPlugins() {
-        const {
-            MODULES,
-            PREFIX
-        } = this.getConfig()
-				
+				const {
+					MODULES,
+					PREFIX
+				} = this.config
+
         const paths = fs.readdirSync(MODULES)
         		.filter(modPath => {
                 return modPath.indexOf(PREFIX) === 0
@@ -38,7 +32,7 @@ export default class Governor {
         return paths
     }
     loadPlugins() {
-			this.getModulePaths.forEach(modulePath => {
+			this.getPlugins.forEach(modulePath => {
 								const p = path.resolve(`${MODULES}/${modulePath}/index.js`)
 								if(!fs.existsSync(p)){
 									throw new Error(`Module ${modulePath} does not have index.js as entry file!`)
