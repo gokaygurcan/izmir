@@ -19,19 +19,33 @@ export default class Governor {
         const config = Object.assign({}, defaultConfig, this.userConfig)
         return config
     }
-    getModulePaths() {
+    getPlugins() {
         const {
             MODULES,
             PREFIX
         } = this.getConfig()
-
+				
         const paths = fs.readdirSync(MODULES)
-            .filter(modPath => {
+        		.filter(modPath => {
                 return modPath.indexOf(PREFIX) === 0
             })
+						.map(p => {
+							return {
+											path:path.resolve(`${MODULES}/${p}`),
+											name:p
+							}
+						})
         return paths
     }
-    loadModules() {
-			console.log(`${this.getModulePaths()} modules will be loaded`)
-    }
+    loadPlugins() {
+			this.getModulePaths.forEach(modulePath => {
+								const p = path.resolve(`${MODULES}/${modulePath}/index.js`)
+								if(!fs.existsSync(p)){
+									throw new Error(`Module ${modulePath} does not have index.js as entry file!`)
+								} else {
+									require(p)()
+								}
+						})
+		}
 }
+

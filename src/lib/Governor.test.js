@@ -5,10 +5,6 @@ describe('Governor tests',()=>{
 							MODULES: process.cwd()+'/.git/super-modules'
 						})
 						const governorConfig = governor.getConfig()
-						const {PREFIX}=governorConfig
-						const temp = governor.getModulePaths().filter(modName => {
-								return modName.indexOf(PREFIX) === 0
-						})
-						console.log(temp)
+						console.log(governor.getPlugins()) 
 				})
 })
