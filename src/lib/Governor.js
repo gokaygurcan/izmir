@@ -25,8 +25,8 @@ export default class Governor {
             })
 						.map(p => {
 							return {
-											path:path.resolve(`${MODULES}/${p}`),
-											name:p
+								path:path.resolve(`${MODULES}/${p}`),
+								name:p
 							}
 						})
         return paths
