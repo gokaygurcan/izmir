@@ -1,11 +1,11 @@
-![Super](/docs/images/logo.png)
+![Izmir](/docs/images/logo.jpg)
 
-## Super CMS
+## Izmir CMS
 A headless cms attempt by @kucukkanat and @yusufiga
 
 #### Installation
 
-Download for your system from [releases](https://github.com/kucukkanat/super/releases)
+Download for your system from [releases](https://github.com/kucukkanat/izmir/releases)
 
 #### Developing 
 
