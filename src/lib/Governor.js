@@ -61,6 +61,7 @@ export default class Governor {
       } else {
         const packageJSON = require(p)
         try {
+					// https://nodejs.org/api/modules.html#modules_all_together
           const requirePath = path.resolve(plugin.path)
           require(requirePath)();
         } catch (err) {
