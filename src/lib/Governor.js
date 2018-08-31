@@ -61,7 +61,7 @@ export default class Governor {
       } else {
         const packageJSON = require(p)
         try {
-          const requirePath = path.resolve(plugin.path, packageJSON.main)
+          const requirePath = path.resolve(plugin.path)
           require(requirePath)();
         } catch (err) {
           logger.error(`There has been an error trying to load module ${plugin.name} : ${err}`)
