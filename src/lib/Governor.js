@@ -30,6 +30,7 @@ export default class Governor {
   getPlugins() {
     const hasPrefix = str => str.indexOf(this.config.PREFIX) === 0
     const isDirectory = folderName => fs.statSync(path.resolve(`${this.config.PLUGIN_PATH}/${folderName}`)).isDirectory()
+    // Check if plugin folder exists
     if (!fs.existsSync(this.config.PLUGIN_PATH)) {
       logger.error(`${this.config.PLUGIN_PATH} does not exist!`)
       return []
