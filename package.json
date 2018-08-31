@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon --exec babel-node src/index.js",
-    "dev:test": "npm run test && chokidar '**/*.test.js' '!node_modules' -c jest",
+    "dev:test": "npm run test && chokidar '**/*.test.js' '!node_modules' -c 'clear; jest' ",
     "compile": "babel src --out-dir dist",
     "build": "npm run compile && pkg dist/index.js -t node8-macos-x64 -o bin/server",
     "build-for-all": "pkg index.js -t node8-macos-x64,node8-linux-x64,node8-win-x64 -o bin/server"

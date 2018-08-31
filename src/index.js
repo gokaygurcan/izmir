@@ -1,8 +1,10 @@
+require('dotenv').config()
 import express from 'express';
 import Governor from 'lib/Governor'
 
+const {PORT} = process.env
 const governor = new Governor()
-const { PORT } = governor.getConfig()
+governor.loadPlugins()
 
 const app = express()
 app.get('/_', (req, res) => res.send('Hello World!'))
