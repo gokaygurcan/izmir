@@ -7,4 +7,4 @@ describe('Governor tests', () => {
     console.log(governor.getPlugins())
 		governor.loadPlugins()
   });
-});
+})

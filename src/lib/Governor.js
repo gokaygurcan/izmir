@@ -25,6 +25,9 @@ export default class Governor {
   getPlugins() {
     const paths = fs
       .readdirSync(this.config.PLUGIN_PATH)
+      .filter(childPath => {
+        return fs.statSync(path.resolve(`${this.config.PLUGIN_PATH}/${childPath}`)).isDirectory();
+      })
       .filter(pluginDirName => {
         return pluginDirName.indexOf(this.config.PREFIX) === 0;
       })
