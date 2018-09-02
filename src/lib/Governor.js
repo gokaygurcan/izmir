@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import Logger from 'lib/Logger'
 
-const logger = new Logger('Governor')
+
 // Load Environment variables
 require('dotenv').config();
 

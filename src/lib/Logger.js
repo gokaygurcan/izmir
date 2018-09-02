@@ -1,21 +1,35 @@
-import chalk from 'chalk'
+import {Signale} from 'signale'
+const custom = new Signale({
+    disabled: false,
+    interactive: false,
+    stream: process.stdout,
+    scope: 'custom',
+    types: {
+        log: {
+            badge: '**',
+            color: 'blue',
+            label: 'Log'
+        },
+        warn: {
+            badge: '⚠️',
+            color: 'yellow',
+            label: 'Warning'
+        },
+        error: {
+            badge: '❗️',
+            color: `red`,
+            label: `Error`
+        }
+    }
+})
 export default class Logger {
-    constructor(broadcaster) {
-        this.broadcaster = broadcaster
+    static log(message) {
+        custom.log(message)
     }
-    log (message) {
-        const head = chalk.bgGreen.black(` ${this.broadcaster} : `)
-        const body = chalk.bgWhite.black(` ${message}`)
-        console.log(`${head}${body}`)
+    static warn(message) {
+        custom.warn(message)
     }
-    warn (message) {
-        const head = chalk.bgYellow.black(` ${this.broadcaster} (Warning!): `)
-        const body = chalk.bgWhite.black(` ${message}`)
-        console.log(`${head}${body}`)
-    }
-    error (message) {
-        const head = chalk.bgRed.black(` ${this.broadcaster} (Error!): `)
-        const body = chalk.bgWhite.black(` ${message}`)
-        console.log(`${head}${body}`)
+    static error(message) {
+        custom.error(message)
     }
 }
