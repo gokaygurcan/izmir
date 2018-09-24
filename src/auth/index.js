@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express()
+const bodyParser = require('body-parser')
 const router = express.Router()
 
 router.use(bodyParser.json())
@@ -16,5 +16,5 @@ router.post('/validate', function (req, res) {
 router.post('/register', function (req, res) {
     res.send('Birds home page')
 })
-router.listen(3000)
+
 module.exports = router
