@@ -1,6 +1,6 @@
-import express from 'express'
+const express = require('express')
+const router = express()
 const router = express.Router()
-import bodyParser from 'body-parser'
 
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -16,4 +16,5 @@ router.post('/validate', function (req, res) {
 router.post('/register', function (req, res) {
     res.send('Birds home page')
 })
-export default router
+router.listen(3000)
+module.exports = router

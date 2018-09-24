@@ -1,8 +1,8 @@
 require('dotenv').config()
-import express from 'express'
+const express = require('express')
 
 // Routes
-import auth from './auth'
+const auth = require('./auth')
 
 const {PORT} = process.env
 const app = express()
