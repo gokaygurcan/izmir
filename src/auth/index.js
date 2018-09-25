@@ -2,22 +2,42 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const router = express.Router()
 const Database = require("../lib/Database")
-const crypto = require('crypto')
+const {sign} = require('../lib/jwt')
 
+const SECRET = process.env.SECRET || ' '
+const hash = require('../lib/hash')
 const userCollection = new Database("users")
+
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({
 	extended: true
 }))
 
 // define the home page route
-router.post('/login', function (req, res) {
-	console.log(req.body)
-	res.send('Birds home page')
+router.post('/login', async (req, res) => {
+	['email','password'].forEach(key => {
+		if(!req.body.hasOwnProperty(key)){
+			res.send({status:false,message:`${key} is missing!`})
+			return
+		}
+	})
+	const {email, password} = req.body
+	const hashed = hash(password)
+	const userCheck = await userCollection.find({email,password:hashed})
+	if(userCheck.length > 0){
+		// Sign the token
+		const token = sign({email})
+		res.send({status:true,token})
+		return 
+	} else {
+		res.send({
+			status: false,
+			message: 'Email and password do not match!'
+		})
+		return 
+	}
 })
-router.post('/validate', function (req, res) {
-	res.send('Birds home page')
-})
+
 router.post('/register', async (req, res) => {
 	// Required fields
 	['email','password'].forEach(key => {
@@ -39,10 +59,7 @@ router.post('/register', async (req, res) => {
 		})
 		return
 	} else {
-		const hashed = crypto
-			.createHash('sha256')
-			.update(password)
-			.digest('base64')
+		const hashed = hash(password)
 		userCollection.insert({email,password:hashed})
 			.then(createdUser => {
 				res.send({
