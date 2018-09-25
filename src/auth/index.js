@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = express.Router()
-const Database = require("../../Database")
+const Database = require("../lib/Database")
+const crypto = require('crypto')
+
 const userCollection = new Database("users")
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({
@@ -17,21 +19,45 @@ router.post('/validate', function (req, res) {
 	res.send('Birds home page')
 })
 router.post('/register', async (req, res) => {
-	const {
-		username
-	} = req.body
+	// Required fields
+	['email','password'].forEach(key => {
+		if(!req.body.hasOwnProperty(key)){
+			res.send({status:false,message:`${key} is missing!`})
+			return
+		}
+	})
+	
+	const {email, password} = req.body
 	// check if username exists
 	const usersfound = await userCollection.find({
-		username
+		email
 	})
 	if (usersfound.length > 0) {
 		res.send({
-			status: false
+			status: false,
+			message: `${email} is already registered!`
 		})
+		return
 	} else {
-
+		const hashed = crypto
+			.createHash('sha256')
+			.update(password)
+			.digest('base64')
+		userCollection.insert({email,password:hashed})
+			.then(createdUser => {
+				res.send({
+					status: true,
+					email:createdUser.email,
+					_id: createdUser._id
+				})
+				return
+			})
+			.catch(err => {
+				console.log(err)
+				res.send({status:false,message: 'There has been an error'})
+			})
 	}
-	res.send('Birds home page')
+	
 })
 
 module.exports = router
