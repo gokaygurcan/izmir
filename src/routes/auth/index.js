@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
 	const hashed = hash(password)
 	const userCheck = await userCollection.find({email,password:hashed})
 	if(userCheck.length > 0){
+		const user = userCheck[0]
 		// Sign the token
 		const token = sign({email})
 		res.cookie(TOKEN_HEADER,token)
