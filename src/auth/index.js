@@ -1,13 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const router = express.Router()
-const Database = require("../lib/Database")
-const {sign} = require('../lib/jwt')
-
-const SECRET = process.env.SECRET || ' '
 const hash = require('../lib/hash')
+const {sign} = require('../lib/jwt')
+const Database = require("../lib/database")
+const {TOKEN_HEADER} = require('../config')
 const userCollection = new Database("users")
 
+const router = express.Router()
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({
 	extended: true
@@ -27,6 +26,7 @@ router.post('/login', async (req, res) => {
 	if(userCheck.length > 0){
 		// Sign the token
 		const token = sign({email})
+		res.cookie(TOKEN_HEADER,token)
 		res.send({status:true,token})
 		return 
 	} else {
