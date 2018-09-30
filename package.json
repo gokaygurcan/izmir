@@ -7,7 +7,7 @@
     "test": "jest",
     "eslint": "eslint src",
     "format": "eslint src --fix",
-    "dev": "PORT=8080 nodemon --exec src/index.js",
+    "dev": "PORT=8080 nodemon src/index.js",
     "dev:test": "npm run test && chokidar '**/*.test.js' '!node_modules' -c 'clear; jest' ",
     "build": "pkg src/index.js -t node8-macos-x64 -o bin/server",
     "build-for-all": "pkg src/index.js -t node8-macos-x64,node8-linux-x64,node8-win-x64 -o bin/server"
@@ -20,6 +20,7 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "chokidar-cli": "^1.2.0",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^6.0.0",
     "eslint": "^5.6.0",
     "express": "^4.16.3",

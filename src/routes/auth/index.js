@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const hash = require('../lib/hash')
-const {sign} = require('../lib/jwt')
-const Database = require("../lib/database")
-const {TOKEN_HEADER} = require('../config')
+const hash = require('../../lib/hash')
+const {sign} = require('../../lib/jwt')
+const Database = require("../../lib/database")
+const {TOKEN_HEADER} = require('../../config')
 const userCollection = new Database("users")
 
 const router = express.Router()

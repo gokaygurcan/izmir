@@ -4,6 +4,7 @@ const express = require('express')
 const {PORT} = require('./config')
 const app = express()
 
-app.use('/auth',require('./auth'))
+app.use('/guard',require('./routes/auth/guard'))
+app.use('/auth',require('./routes/auth'))
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))
