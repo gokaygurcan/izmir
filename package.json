@@ -1,7 +1,6 @@
 {
   "name": "izmir",
-  "version": "0.0.2",
-  "main": "index.js",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "test": "jest",
